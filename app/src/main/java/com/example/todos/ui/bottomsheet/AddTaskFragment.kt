@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.todos.databinding.FragmentAddTaskBinding
+import com.example.todos.ui.tasklist.TaskListViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -13,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddTaskFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentAddTaskBinding
 
-    private val viewModel: AddTaskViewModel by viewModels()
+    private val viewModel: TaskListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

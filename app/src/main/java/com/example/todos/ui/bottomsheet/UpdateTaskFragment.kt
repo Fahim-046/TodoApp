@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.todos.databinding.FragmentUpdateTaskBinding
+import com.example.todos.ui.tasklist.TaskListViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -13,10 +14,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class UpdateTaskFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentUpdateTaskBinding
 
-    private val viewModel: UpdateTaskViewModel by viewModels()
+    private val viewModel: TaskListViewModel by viewModels()
 
     private var taskId: Int = 0
-    private var taskStatus:Boolean = false
+    private var taskStatus: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +29,19 @@ class UpdateTaskFragment : BottomSheetDialogFragment() {
     }
 
     private fun initObservers() {
-        viewModel.eventSuccess.observe(this){
-            if(it==true)dismiss()
+        viewModel.eventSuccess.observe(this) {
+            if (it == true) {
+                dismiss()
+            }
         }
 
-        viewModel.todo.observe(this){
+        viewModel.todo.observe(this) {
             binding.taskName.setText(it!!.task)
+        }
+        viewModel.eventDeleteSuccess.observe(this) {
+            if (it!!) {
+                dismiss()
+            }
         }
     }
 
@@ -63,6 +71,9 @@ class UpdateTaskFragment : BottomSheetDialogFragment() {
                 binding.taskName.text.toString(),
                 taskStatus
             )
+        }
+        binding.deleteBtn.setOnClickListener {
+            viewModel.deleteTask(taskId)
         }
     }
 }

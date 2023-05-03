@@ -45,6 +45,12 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list) {
         viewModel.taskItems.observe(this) {
             adapter.submitList(it)
         }
+        viewModel.eventSuccess.observe(this) {
+            adapter.submitList(adapter.currentList)
+        }
+        viewModel.eventDeleteSuccess.observe(this){
+            adapter.submitList(adapter.currentList)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -27,7 +27,8 @@ class TaskListAdapter(
 
         fun bind(item: TaskEntity) {
             binding.taskTv.text = item.task
-            binding.completeBox.isChecked = item.isCompleted
+            if(item.isCompleted)binding.completeBox.isChecked=true
+            binding.completeBox.isChecked=false
 
             binding.root.setOnClickListener {
                 onClick(item)
