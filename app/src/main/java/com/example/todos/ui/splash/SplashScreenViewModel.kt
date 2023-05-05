@@ -1,4 +1,7 @@
 package com.example.todos.ui.splash
 
-class SplashScreenViewModel {
+import android.view.View
+import androidx.lifecycle.ViewModel
+
+class SplashScreenViewModel(): ViewModel() {
 }

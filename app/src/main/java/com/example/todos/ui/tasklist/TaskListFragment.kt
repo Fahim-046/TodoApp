@@ -2,6 +2,7 @@ package com.example.todos.ui.tasklist
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,10 +47,8 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list) {
             adapter.submitList(it)
         }
         viewModel.eventSuccess.observe(this) {
-            adapter.submitList(adapter.currentList)
         }
-        viewModel.eventDeleteSuccess.observe(this){
-            adapter.submitList(adapter.currentList)
+        viewModel.eventDeleteSuccess.observe(this) {
         }
     }
 
@@ -79,4 +78,5 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list) {
         binding.list.layoutManager = layoutManager
         binding.list.adapter = adapter
     }
+
 }
