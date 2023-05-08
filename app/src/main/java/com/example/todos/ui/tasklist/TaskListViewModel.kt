@@ -39,11 +39,14 @@ class TaskListViewModel @Inject constructor(
     fun showTask() = viewModelScope.launch {
         try {
             val tasks = repository.getAllTask()
+            Log.e("TaskListViewModel show task", "show task ${tasks.count()}")
             _taskItems.value = tasks
         } catch (e: Exception) {
             _taskItems.postValue(listOf())
 
-            Log.d("error", "somethig wrong happened")
+            Log.d("TaskListViewModel error", "somethig wrong happened")
+
+            e.printStackTrace()
         }
     }
 
@@ -61,7 +64,7 @@ class TaskListViewModel @Inject constructor(
 
             _todo.value =task
         } catch (e: Exception) {
-            Log.d("message-error", "Didn't get the task data")
+            Log.d("TaskListViewModel message-error", "Didn't get the task data")
         }
     }
 
@@ -70,11 +73,10 @@ class TaskListViewModel @Inject constructor(
             val response = repository.updateTask(TaskEntity(id, task, status))
 
             _eventSuccess.value = true
-            showTask()
         } catch (e: Exception) {
             _eventSuccess.value = false
 
-            Log.d("message-error", "${e.message}")
+            Log.d("TaskListViewModel message-error", "${e.message}")
         }
     }
 
@@ -98,9 +100,8 @@ class TaskListViewModel @Inject constructor(
             repository.saveTask(TaskEntity(null, task, false))
 
             _eventSuccess.value = true
-            showTask()
         } catch (e: Exception) {
-            Log.d("error", "Task is not added")
+            Log.d("TaskListViewModel error", "Task is not added")
         }
     }
 
@@ -108,9 +109,8 @@ class TaskListViewModel @Inject constructor(
         try {
             repository.deleteTask(id)
             _eventDeleteSuccess.value=true
-            showTask()
         } catch (e: Exception) {
-            Log.d("errorFound", "Data has been deleted")
+            Log.d("TaskListViewModel errorFound", "Data has been deleted")
         }
     }
 }
