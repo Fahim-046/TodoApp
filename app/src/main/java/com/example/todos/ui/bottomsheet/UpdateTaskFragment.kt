@@ -11,7 +11,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UpdateTaskFragment : BottomSheetDialogFragment() {
+class UpdateTaskFragment(
+    private val onSuccess: () -> Unit
+) : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentUpdateTaskBinding
 
     private val viewModel: TaskListViewModel by viewModels()
@@ -32,6 +34,8 @@ class UpdateTaskFragment : BottomSheetDialogFragment() {
         viewModel.eventSuccess.observe(this) {
             if (it == true) {
                 dismiss()
+
+                onSuccess()
             }
         }
 
@@ -41,6 +45,8 @@ class UpdateTaskFragment : BottomSheetDialogFragment() {
         viewModel.eventDeleteSuccess.observe(this) {
             if (it!!) {
                 dismiss()
+
+                onSuccess()
             }
         }
     }
