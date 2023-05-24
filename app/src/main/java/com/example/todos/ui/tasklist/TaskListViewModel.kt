@@ -39,6 +39,7 @@ class TaskListViewModel @Inject constructor(
     fun showTask() = viewModelScope.launch {
         try {
             val tasks = repository.getAllTask()
+            _taskItems.value = listOf()
             _taskItems.value = tasks
         } catch (e: Exception) {
             _taskItems.postValue(listOf())

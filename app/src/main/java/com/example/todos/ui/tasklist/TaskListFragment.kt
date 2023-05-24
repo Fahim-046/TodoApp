@@ -1,6 +1,7 @@
 package com.example.todos.ui.tasklist
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -44,6 +45,7 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list) {
 
     private fun initObservers() {
         viewModel.taskItems.observe(this) {
+            Log.d("adding data", "${it?.size}")
             adapter.submitList(it)
         }
         viewModel.eventSuccess.observe(this) {
