@@ -40,11 +40,15 @@ class TaskListViewModel @Inject constructor(
         try {
             val tasks = repository.getAllTask()
             _taskItems.value = listOf()
+            Log.e("TaskListViewModel show task", "show task ${tasks.count()}")
+
             _taskItems.value = tasks
         } catch (e: Exception) {
             _taskItems.postValue(listOf())
 
-            Log.d("error", "somethig wrong happened")
+            Log.d("TaskListViewModel error", "somethig wrong happened")
+
+            e.printStackTrace()
         }
     }
 
@@ -60,9 +64,9 @@ class TaskListViewModel @Inject constructor(
         try {
             val task = repository.specificTask(id)
 
-            _todo.value =task
+            _todo.value = task
         } catch (e: Exception) {
-            Log.d("message-error", "Didn't get the task data")
+            Log.d("TaskListViewModel message-error", "Didn't get the task data")
         }
     }
 
@@ -71,11 +75,10 @@ class TaskListViewModel @Inject constructor(
             val response = repository.updateTask(TaskEntity(id, task, status))
 
             _eventSuccess.value = true
-            showTask()
         } catch (e: Exception) {
             _eventSuccess.value = false
 
-            Log.d("message-error", "${e.message}")
+            Log.d("TaskListViewModel message-error", "${e.message}")
         }
     }
 
@@ -99,19 +102,17 @@ class TaskListViewModel @Inject constructor(
             repository.saveTask(TaskEntity(null, task, false))
 
             _eventSuccess.value = true
-            showTask()
         } catch (e: Exception) {
-            Log.d("error", "Task is not added")
+            Log.d("TaskListViewModel error", "Task is not added")
         }
     }
 
     fun deleteTask(id: Int) = viewModelScope.launch {
         try {
             repository.deleteTask(id)
-            _eventDeleteSuccess.value=true
-            showTask()
+            _eventDeleteSuccess.value = true
         } catch (e: Exception) {
-            Log.d("errorFound", "Data has been deleted")
+            Log.d("TaskListViewModel errorFound", "Data has been deleted")
         }
     }
 }

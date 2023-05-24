@@ -3,7 +3,6 @@ package com.example.todos.ui.tasklist
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,7 +36,9 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list) {
 
         bundle.putBoolean("keyStatus", task.isCompleted)
 
-        val bottomSheetUpdate = UpdateTaskFragment()
+        val bottomSheetUpdate = UpdateTaskFragment {
+            viewModel.showTask()
+        }
         bottomSheetUpdate.show(parentFragmentManager, "updating data")
 
         bottomSheetUpdate.arguments = bundle
@@ -70,7 +71,9 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list) {
 
     private fun initListeners() {
         binding.addTask.setOnClickListener {
-            val bottomSheetAdd = AddTaskFragment()
+            val bottomSheetAdd = AddTaskFragment {
+                viewModel.showTask()
+            }
             bottomSheetAdd.show(parentFragmentManager, "Data is added")
         }
     }
@@ -80,5 +83,4 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list) {
         binding.list.layoutManager = layoutManager
         binding.list.adapter = adapter
     }
-
 }
